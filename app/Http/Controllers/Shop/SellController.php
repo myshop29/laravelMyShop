@@ -38,7 +38,7 @@ class SellController extends Controller
                     }
                     try {
                         $result = Sell_tranjection::insert($sellData); 
-                        return response()->json(['success' => 'Success']);
+                        return response()->json(['success' => 'Product sell successfull']);
                     } catch (\Illuminate\Database\QueryException $SellTranjectionExec) {
                         if($SellTranjectionExec){
                             $Deletedid = Sell::where('id',$sellId)->delete();
