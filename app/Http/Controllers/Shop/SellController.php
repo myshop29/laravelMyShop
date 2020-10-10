@@ -33,8 +33,7 @@ class SellController extends Controller
                             'qty' => $sellTranjection[$i]->qty - 1 , 
                             'total_pur_price' => $sellTranjection[$i]->total_pur_price - $sellTranjection[$i]->purchase_price * 1
                         ]; 
-                       
-                        Product::where('id',$sellTranjection[$i]->id)->update($productUpdateArr);
+                       $aaa =  Product::where('id',$sellTranjection[$i]->id)->update($productUpdateArr);
                     }
                     try {
                         $result = Sell_tranjection::insert($sellData); 
@@ -52,7 +51,6 @@ class SellController extends Controller
                     }
                }
             }
-            
             return response()->json(['error'=> 'Something wrong , please try again .']);
         }
         catch(\Illuminate\Database\QueryException $Exception)
