@@ -25,7 +25,7 @@ class DistributorController extends Controller
                 // created on Distributor tabels ........
                 try{
                         // created on Setting tabels ........
-                    $setting = array('user_id' => $result, 'parent_id' => $request->user()->id,'access_name'=> 'retailers,sellers,workers','parmition'=>1);
+                    $setting = array('user_id' => $result, 'parent_id' => $request->user()->id,'access_name'=> 'shop,retailers,sellers,workers','parmition'=>1);
                     $settingLastId = Setting::create($setting)->id;
                     return response()->json(['success'=>'Distributor create successfully.']);
                 }
