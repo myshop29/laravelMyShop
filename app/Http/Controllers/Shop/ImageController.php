@@ -36,10 +36,12 @@ class ImageController extends Controller
                 $product = array('image_url'=>$productImages,'image_type' => 'product_image','user_id' => $request->user()->id);
                 $imageId = Image::create($product)->id;
                 if($imageId){
-                $success = file_put_contents(public_path().'/role'.$request->user()->role.'/product/'.$profileImage, $file);
+                    $success = file_put_contents(public_path().'/role'.$request->user()->role.'/product/'.$profileImage, $file);
+                    return response()->json(['success'=>'image upload successfully.','image_id' => $imageId]);
                 }
-
-                return response()->json(['success'=>'image upload successfully.','image_id' => $imageId]);
+                else{
+                    return response()->json(['error'=>'please try once.']);
+                }
             } 
             catch(\Illuminate\Database\QueryException $imageTableException)
             {
