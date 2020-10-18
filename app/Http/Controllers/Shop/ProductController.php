@@ -45,7 +45,6 @@ class ProductController extends Controller
         try{
             $shopId = Shop::where('user_id',$request->user()->id)->value('id');
             $categories = Product::where('shop_id',$shopId)->groupBy('category_id')->select('category_name','category_id')->get();
-            return response()->json($categories);
             try {
                 $data=[];
                 if(!empty($categories) && isset($categories))
