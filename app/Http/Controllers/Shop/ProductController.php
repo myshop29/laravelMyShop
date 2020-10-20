@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 use App\User;
 use App\models\Brand;
 use App\models\Category;
@@ -44,14 +45,16 @@ class ProductController extends Controller
     {      
         try{
             $shopId = Shop::where('user_id',$request->user()->id)->value('id');
-            $categories = Product::where('shop_id',$shopId)->groupBy('category_id')->select('category_name','category_id')->get();
+            $categories = Product::where('shop_id',$shopId)->groupBy('category_name')->select('category_name','category_id')->get();
             try {
                 $data=[];
                 if(!empty($categories) && isset($categories))
                 {
                     foreach ($categories as  $category) {
-                        $products = Product::where('category_id',$category->category_id)->with('image')->get();
-                    $data[]=['category_name'=>$category->category_name,'products'=> $products];
+                        $categories = Category::where('category_name',$category->category_name)->pluck('id');
+                        $totalAmount = Product::whereIn('category_id',$categories)->sum(DB::raw('selling_price * qty'));
+                        $products = Product::whereIn('category_id',$categories)->with('image')->get();
+                        $data[]=['category_name'=>$category->category_name,'total_amount' => $totalAmount ,'products'=> $products];
                     }
                 }
                 return response()->json($data);
