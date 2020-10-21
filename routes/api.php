@@ -35,6 +35,11 @@ Route::group(['prefix' => 'auth'], function () {
     });
 
     Route::group(['middleware' => 'auth:api'], function() {
+        Route::post('add-retailer', 'Retailer\RetailerController@addRetailer');
+        Route::post('get-retailers', 'Retailer\RetailerController@getRetailers');
+    });
+
+    Route::group(['middleware' => 'auth:api'], function() {
         //Shop
         Route::post('add-shop', 'Shop\ShopController@addShop');
         Route::get('get-shops', 'Shop\ShopController@getShops');
