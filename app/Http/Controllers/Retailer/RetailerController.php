@@ -57,7 +57,8 @@ class RetailerController extends Controller
     public function getRetailers(Request $request)
     {
         $skipId = json_decode($request->skip_id);
-        $users = User::where('role',2)->skip($skipId)->take(8)->get();
+        $retaileeIds = Retailer::where('parent_id',$request->user()->id)->pluck('user_id');
+        $users = User::whereIn('id',$retaileeIds)->skip($skipId)->take(8)->get();
         return response()->json(['data' => $users]);
     }
 }

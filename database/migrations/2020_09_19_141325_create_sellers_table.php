@@ -20,10 +20,12 @@ class CreateSellersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('shop_id');
-            $table->string('alt_phone',13);
-            $table->string('city');
-            $table->string('state');
+            $table->integer('parent_id');
+            $table->string('country',50);
+            $table->string('city',50);
+            $table->string('state',30);
             $table->string('address');
+            $table->string('alt_phone',13)->nullable();
             $table->string('status',10)->default('Active');
             $table->timestamps();
             $table->softDeletes();

@@ -10,6 +10,8 @@ use App\models\Brand;
 use App\models\Category;
 use App\models\Product;
 use App\models\Shop;
+use App\models\Seller;
+use App\models\Worker;
 
 class ProductController extends Controller
 {
@@ -44,7 +46,15 @@ class ProductController extends Controller
     public function getProducts(Request $request)
     {      
         try{
+            $shopId = '';
             $shopId = Shop::where('user_id',$request->user()->id)->value('id');
+            if (empty($shopId)) {
+                $shopId = Seller::where('user_id',$request->user()->id)->value('shop_id');
+            }
+            if (empty($shopId)) {
+                $shopId = Worker::where('user_id',$request->user()->id)->value('shop_id');
+            }
+
             $categories = Product::where('shop_id',$shopId)->groupBy('category_name')->select('category_name','category_id')->get();
             try {
                 $data=[];

@@ -47,9 +47,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name'     => 'Workers',
-            'email'    => 'workers@gmail.com',
-            'phone'    => '1234567890',
+            'name'     => 'Seller',
+            'email'    => 'seller@gmail.com',
+            'phone'    => '1234567892',
             'password' => bcrypt('admin'),
             'role'     => 3,
             'status'   => 'active',
@@ -58,15 +58,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name'     => 'Seller',
-            'email'    => 'seller@gmail.com',
-            'phone'    => '1234567892',
+            'name'     => 'Workers',
+            'email'    => 'workers@gmail.com',
+            'phone'    => '1234567890',
             'password' => bcrypt('admin'),
             'role'     => 4,
             'status'   => 'active',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
+
+
 
     }
 }

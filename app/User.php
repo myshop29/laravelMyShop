@@ -42,4 +42,5 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\models\Distributor', 'user_id', 'id');
     }
+
 }

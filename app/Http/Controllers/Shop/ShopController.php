@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\models\Shop;
+use App\models\Seller;
+use App\models\Worker;
 
 class ShopController extends Controller
 {
@@ -49,8 +51,28 @@ class ShopController extends Controller
     {
         try 
         {
+            $allShops = [];
             $allShops = Shop::where('user_id',$request->user()->id)->get();
-            return response()->json(['success'=>'Shop create successfully.','data' => $allShops]);
+            if (count($allShops)>0) {
+                return response()->json(['success'=>'All Shops.','data' => $allShops]);
+            }
+            else{
+                $sellerParentId = Seller::where('user_id',$request->user()->id)->pluck('parent_id');
+                $allShops = Shop::whereIn('user_id',$sellerParentId)->get();
+                if (count($allShops)>0) {
+                    return response()->json(['success'=>'All Shops.','data' => $allShops]);
+                }
+                else{
+                    $workerParentId = Worker::where('user_id',$request->user()->id)->pluck('parent_id');
+                    $allShops = Shop::where('user_id',$workerParentId)->get();
+                    if (count($allShops)>0) {
+                        return response()->json(['success'=>'All Shops.','data' => $allShops]);
+                    }
+                    else{
+                        return response()->json(['success'=>'All Shops.','data' => $allShops]);
+                    }
+                }
+            }
         } 
         catch(\Illuminate\Database\QueryException $shopsGetDataException)
         {
@@ -58,7 +80,5 @@ class ShopController extends Controller
                 return response()->json($shopsGetDataException);
             }
         }
-
-       // return response()->json($request->user()->id);
     }
 }

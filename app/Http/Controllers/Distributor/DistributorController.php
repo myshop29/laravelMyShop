@@ -59,7 +59,8 @@ class DistributorController extends Controller
     public function getDistributors(Request $request)
     {
         $skipId = json_decode($request->skip_id);
-        $users = User::where('role',1)->skip($skipId)->take(8)->get();
+        $distributorIds = Distributor::where('parent_id',$request->user()->id)->pluck('user_id');
+        $users = User::where('id',$distributorIds)->skip($skipId)->take(8)->get();
         return response()->json(['data' => $users]);
     }
 }

@@ -40,6 +40,17 @@ Route::group(['prefix' => 'auth'], function () {
     });
 
     Route::group(['middleware' => 'auth:api'], function() {
+        Route::post('add-seller', 'Seller\SellerController@addSeller');
+        Route::post('get-sellers', 'Seller\SellerController@getSellers');
+    });
+
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::post('add-worker', 'Worker\WorkerController@addWorker');
+        Route::post('get-workers', 'Worker\WorkerController@getWorkers');
+    });
+
+    
+    Route::group(['middleware' => 'auth:api'], function() {
         //Shop
         Route::post('add-shop', 'Shop\ShopController@addShop');
         Route::get('get-shops', 'Shop\ShopController@getShops');
