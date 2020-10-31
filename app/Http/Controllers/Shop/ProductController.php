@@ -42,6 +42,7 @@ class ProductController extends Controller
             }
         } 
     }
+    
 
     public function getProducts(Request $request)
     {      
