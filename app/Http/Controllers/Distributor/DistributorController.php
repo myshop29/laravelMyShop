@@ -60,7 +60,7 @@ class DistributorController extends Controller
     {
         $skipId = json_decode($request->skip_id);
         $distributorIds = Distributor::where('parent_id',$request->user()->id)->pluck('user_id');
-        $users = User::where('id',$distributorIds)->skip($skipId)->take(8)->get();
+        $users = User::whereIn('id',$distributorIds)->skip($skipId)->take(8)->get();
         return response()->json(['data' => $users]);
     }
 }

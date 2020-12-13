@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('payment', 'Payment\PaymentController@create')->name('paywithrazorpay');
+Route::post('payment', 'Payment\PaymentController@payment')->name('payment');

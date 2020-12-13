@@ -64,7 +64,7 @@ class ShopController extends Controller
                 }
                 else{
                     $workerParentId = Worker::where('user_id',$request->user()->id)->pluck('parent_id');
-                    $allShops = Shop::where('user_id',$workerParentId)->get();
+                    $allShops = Shop::whereIn('user_id',$workerParentId)->get();
                     if (count($allShops)>0) {
                         return response()->json(['success'=>'All Shops.','data' => $allShops]);
                     }
