@@ -17,7 +17,7 @@ class OrderController extends Controller
     {
         try{
             $orderType = $request->order_type;
-            $order_id = Order::where('order_type',$orderType)->value('id');
+            $order_id = Order::where('order_type',$orderType)->where('shop_id',$request->shop_id)->value('id');
             if ($order_id) {
                 try {
                     $order = $request->all();

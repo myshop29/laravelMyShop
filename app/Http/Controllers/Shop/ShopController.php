@@ -29,7 +29,15 @@ class ShopController extends Controller
                     $input['user_id'] = $request->user()->id; 
                     $input['status'] = 'Active'; 
                     $result = Shop::create($input)->id;
-                    return response()->json(['success'=>'Shop create successfully.','shop_id' =>$result ]);
+                    try {
+                        $allShops = Shop::where('user_id',$request->user()->id)->get();
+                        return response()->json(['success'=>'Shop create successfully.','data' =>$allShops ]);
+                    } catch (\Illuminate\Database\QueryException $getShopEx) {
+                        if($shopsTableException){
+                            return response()->json($getShopEx);
+                        }
+                    }
+
                 } 
                 catch(\Illuminate\Database\QueryException $shopsTableException)
                 {
